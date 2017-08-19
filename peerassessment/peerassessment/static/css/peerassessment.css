@@ -1,0 +1,9 @@
+/* CSS for PeerAssessemntXBlock */
+
+.peerassessment_block .count {
+    font-weight: bold;
+}
+
+.peerassessment_block p {
+    cursor: pointer;
+}
