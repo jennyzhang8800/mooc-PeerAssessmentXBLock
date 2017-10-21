@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script type="text/javascript" src="../js/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="../js/showdown.min.js"></script>
+    <script type="text/javascript" src="../js/handlebars-v4.0.10.js"></script>
+    <script type="text/javascript" src="../js/commit.js"></script>
+    <link href="../css/commit.css" rel="stylesheet" type="text/css" />
+    <title>Title</title>
+</head>
+<body>
+
+<div class="peer_assessment">
+
+</div>
+</body>
+</html>
+
+<script id="unStart-template" type="text/x-handlebars-template">
+    <div class="title"><p>互评尚未开放</p></div>
+</script>
+
+<script id="submit-template" type="text/x-handlebars-template">
+    <div class="title"><p>{{title}}</p></div>
+    <div class="hr"></div>
+    <p class="lableText">【题目】</p>
+    <div>{{Markdown question}}</div>
+    <div class="hr_sub"></div>
+    <p class="lableText">【回答】</p>
+    <textarea class="text-input"></textarea>
+    <div class="btn"><button class="btn btn-submit" id="btn-submit">提交</button></div>
+</script>
+
+
+<script id="assessment-template" type="text/x-handlebars-template">
+    <div class="title"><p>{{title}}</p></div>
+    <div class="hr"></div>
+    <p class="lableText">【题目】</p>
+    <div>{{Markdown question}}</div>
+    <div class="hr_sub"></div>
+    <p class="lableText">【回答】</p>
+    <div>{{Markdown answer}}</div>
+    <div class="hr_sub"></div>
+    <p class="lableText">【批改】</p>
+    <textarea class="text-input"></textarea>
+    <div class="btn"><button class="btn btn-submit" id="btn-assessment">提交</button></div>
+</script>
+<script id="audit-template" type="text/x-handlebars-template">
+    <div class="title"><p>{{title}}</p></div>
+    <div class="hr"></div>
+    <p class="lableText">【题目】</p>
+    <div>{{Markdown question}}</div>
+    <div class="hr_sub"></div>
+    <p class="lableText">【您的回答】</p>
+    <div>{{Markdown answer}}</div>
+    <div class="hr_sub"></div>
+    <p class="lableText">【互评结果】</p>
+    <div>{{Markdown grade}}</div>
+      <div class="hr_sub"></div>
+    <p class="lableText">【审查】</p>
+    <p>如果您认为互评结果不合理，请点击“申请审查”；否则，请点击“不用审查”</p>
+    <div class="btn"><button class="btn btn-submit" id="btn-audit">申请审查</button><button class="btn btn-submit-no" id="btn-no-audit">不用审查</button></div>
+</script>
+
+<script id="gradePublish-template" type="text/x-handlebars-template">
+    <div class="title"><p>{{title}}</p></div>
+    <div class="hr"></div>
+    <p class="lableText">【题目】</p>
+    <div>{{Markdown question}}</div>
+    <div class="hr_sub"></div>
+    <p class="lableText">【您的回答】</p>
+    <div>{{Markdown answer}}</div>
+    <div class="hr_sub"></div>
+    <p class="lableText">【最终成绩】</p>
+    <div>{{Markdown grade}}</div>
+</script>
