@@ -1,0 +1,40 @@
+/* CSS for PeerAssessemntXBlock */
+
+.peerassessment_block .count {
+    font-weight: bold;
+}
+
+.peerassessment_block p {
+    cursor: pointer;
+}
+table.table0{
+    width:100%;
+    height:100%;
+    border:1px;
+    cellspacing:0;
+    cellpadding:0;
+    background-color:#f1f1f1;
+}
+table.table1{
+    align:center;
+    width: 600px;
+    height: 700px;
+    border:0;
+    cellspacing:10;
+    cellpadding:5;
+    border:0px #337AB7 solid;
+}
+
+.DatePlugin {
+    text-align:center;
+    color:#A8A8A8;
+    height:20px;
+    border: 1px solid ;
+    width:220px;
+    cursor:pointer
+}
+#nextMonth  {
+width:30px;
+height:30px;
+background-color:blue;
+}
