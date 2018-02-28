@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>教师页面</title>
+
+    <!-- Bootstrap -->
+    <link href="http://cdn.bootcss.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="http://cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+
+<ul class="nav nav-pills navbar-default nav-justified" role="navigation">
+    <li class="active"><a data-toggle="pill" href="#home">互评说明</a></li>
+    <li class="dropdown">
+        <a class="dropdown-toggle " data-toggle="dropdown">
+            互评设置 <span class="caret"></span>
+        </a>
+        <ul class="dropdown-menu">
+            <li><a data-toggle="pill" href="#questionSettingNav">设置题目</a></li>
+            <li class="divider"></li>
+            <li><a data-toggle="pill" href="#timeSettingNav">设置各阶段时间</a></li>
+
+        </ul>
+    </li>
+    <li><a data-toggle="pill" href="#Status">查看流程状态</a></li>
+    <li><a data-toggle="pill" href="#ToDO">查看待处理任务</a></li>
+
+</ul>
+<div class="container">
+    <div class="tab-content">
+        <div id="home" class="tab-pane fade in active">
+            <p></p>
+            <p><Strong>1.互评设置：</Strong>包含“布置题目”以及“设置各阶段时间”。两项均设置好之后，互评流程即布署完成，互评流程会按照设定好的时间自动执行。</p>
+
+            <p><Strong>2. 查看当前流程状态：</Strong>显示互评流程图，以及当前正在执行的活动</p>
+
+            <p><Strong>3. 查看待处理任务：</Strong>查看需要教师进行处理的任务</p>
+
+        </div>
+        <div id="questionSettingNav" class="tab-pane fade">
+           
+           <iframe src="questionSetting.html" scrolling="no" onload="Javascript:reinitIframe()" frameBorder=0 id="excerciseSetting" width="100%"  height="900px" ></iframe>
+        </div>
+
+        <div id="timeSettingNav" class="tab-pane fade">
+           <iframe src="timeSetting.html" scrolling="no"  frameBorder=0 id="timeSetting" width="100%"  height="1200px" ></iframe>
+        </div>
+
+        <div id="Status" class="tab-pane fade">
+            <p>查看当前流程状态,嵌入iframe</p>
+        </div>
+
+        <div id="ToDO" class="tab-pane fade">
+            <p>查看待处理任务,嵌入iframe</p>
+        </div>
+    </div>
+
+</div>
+
+
+</body>
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="http://cdn.bootcss.com/jquery/1.11.1/jquery.min.js"></script>
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="http://cdn.bootcss.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+</body>
+</html>

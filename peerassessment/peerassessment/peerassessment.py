@@ -11,6 +11,7 @@ from lib_util import Util
 import urllib2
 import json
 import base64
+import hashlib
 class PeerAssessemntXBlock(XBlock):
     """
     TO-DO: document what your XBlock does.
@@ -59,27 +60,32 @@ class PeerAssessemntXBlock(XBlock):
         # Just to show data coming in...
         student = self.runtime.get_real_user(self.runtime.anonymous_student_id)
         studentEmail = student.email
-        studentType = "staff" if student.is_staff else "student"
+        studentUsername = student.username
+        userType = "staff" if student.is_staff else "student"
+        indexUrl = Config.indexUrl
+        signString = studentEmail+studentUsername+userType+'workFlow_921691866422837248'
+        signature = hashlib.new('md5',signString ).hexdigest()
         activitiLoginUrl = Config.activitiLoginUrl % {
             'studentEmail': studentEmail,
-            'userType': studentType,
+            'userType': userType,
+            'userName':studentUsername,
+            'signature':signature.lower()
         } 
-        #url="https://api.github.com/repos/chyyuu/os_course_exercise_library/contents/data/json/16/1502.json"
         try:
             res_data = urllib2.urlopen(activitiLoginUrl)
             res = res_data.read()
             res = json.loads(res)
             
             uuid = res["data"]["uuid"]
-           
+            
             loginAbutmentUrl = Config.loginAbutmentUrl % {
                 'studentEmail':studentEmail,
                 'uuid':uuid,
             }
-            return {"iframeSrc": loginAbutmentUrl,"content":activitiLoginUrl,"email":loginAbutmentUrl}
+            return {"iframeSrc": loginAbutmentUrl,"content":activitiLoginUrl,"email":loginAbutmentUrl,"userType":userType,"indexUrl":indexUrl}
           
         except Exception as e:
-            return {"iframeSrc":"","content":"","email":studentEmail,"error":str(e)}
+            return {"iframeSrc":"","content":"","email":studentEmail,"error":str(e),"userType":userType,"indexUrl":indexUrl}
     
     # TO-DO: change this to create the scenarios you'd like to see in the
     # workbench while developing your XBlock.

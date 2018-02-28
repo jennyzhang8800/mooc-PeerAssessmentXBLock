@@ -1,0 +1,90 @@
+$(document).ready(function() {
+    //注册markdown helper。把markdown格式转化为html
+    Handlebars.registerHelper('Markdown', function(text) {
+        var converter = new showdown.Converter();
+        return new Handlebars.SafeString(converter.makeHtml(text));
+    });
+
+    curStatus={title:"作业提交阶段",question:"下面是SFS的磁盘索引节点数据结构定义。\n```\nstruct sfs_disk_inode {\n    uint32_t size;\n    uint16_t type;\n    uint16_t nlinks;\n    uint32_t blocks;\n    uint32_t direct[SFS_NDIRECT];\n    uint32_t indirect;\n};\n```\n假定ucore 里 SFS_NDIRECT的取值是16，而磁盘上数据块大小为1KB。请计算这时ucore支持的最大文件大小。请给出计算过程。（这样可给步骤分）"};
+    //curStatus={title:"作业互评阶段",answer:"this is a test answer",question:"下面是SFS的磁盘索引节点数据结构定义。\n```\nstruct sfs_disk_inode {\n    uint32_t size;\n    uint16_t type;\n    uint16_t nlinks;\n    uint32_t blocks;\n    uint32_t direct[SFS_NDIRECT];\n    uint32_t indirect;\n};\n```\n假定ucore 里 SFS_NDIRECT的取值是16，而磁盘上数据块大小为1KB。请计算这时ucore支持的最大文件大小。请给出计算过程。（这样可给步骤分）"};
+
+    //加载数据
+    onDataLoad();
+
+    //点击“提交”按钮,绑定click事件
+    $(".btn-submit").on('click', function(event) {
+        answer = $('.text-input').val();
+        if ($.trim(answer) == '') {
+            alert('答案不能为空');
+            return;
+        }
+        switchStyle($(event.target), 'submiting');
+        /*提交数据到后台
+        $.ajax({
+            type: 'POST',
+            url: ...
+            data: JSON.stringify({'answer': answer}),
+            dataType: 'json',
+            success: function(data) {
+                switchStyle($(event.target), 'submited');
+                if (data.code != 0) {
+                    alert('您的提交可能失败了' + JSON.stringify(data));
+                } else {
+                    curStatus = data.result;
+                    onDataLoad();
+                }
+            }
+        });
+        */
+    });
+
+});
+//加载页面
+function onDataLoad() {
+    if(curStatus.title=="作业提交阶段"){
+    //加载handlebars模板
+    try {
+        var source = $("#submit-template").html();
+        var template = Handlebars.compile(source);
+        var html = template(curStatus);
+        $('.peer_assessment').html(html);
+
+    } catch (e) {
+        console.info(e);
+    }
+    }
+
+    else if(curStatus.title=="作业互评阶段"){
+        //加载handlebars模板
+        try {
+            var source = $("#assessment-template").html();
+            var template = Handlebars.compile(source);
+            var html = template(curStatus);
+            $('.peer_assessment').html(html);
+
+        } catch (e) {
+            console.info(e);
+        }
+    }
+
+
+}
+
+
+//转换按钮风格
+function switchStyle($el, style) {
+    $el.attr('class', 'btn');
+    $el.attr('disabled', false);
+    if (style == 'submit') {
+        $el.addClass('btn-submit');
+        $el.text('再次提交');
+    } else if (style == 'submiting') {
+        $el.addClass('btn-submiting');
+        $el.text('正在提交...');
+        $el.attr('disabled', true);
+    } else if (style == 'submited') {
+        $el.addClass('btn-submited');
+        $el.text('已提交');
+        $el.attr('disabled', true);
+    }
+}

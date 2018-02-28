@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Bootstrap 101 Template</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- Bootstrap -->
+<link href="bootstrap2/css/bootstrap.min.css" rel="stylesheet" media="screen">
+<link href="css/exercisemdf.css" rel="stylesheet" media="screen">
+
+<script src="js/jquery-1.11.3.js"></script>
+<script src="bootstrap2/js/bootstrap.min.js"></script>
+<script src="js/src/exercisemdf.js"></script>
+</head>
+<body>
+<div id="alart-error-template" class="template">
+    <div class="alert alert-block alert-error">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        <h4>Error!</h4>
+        <div id="alart-desc"></div>
+    </div>
+</div>
+
+<div id="alart-success-template" class="template">
+    <div class="alert alert-block alert-success">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        <h4>Success!</h4>
+        <div id="alart-desc"></div>
+    </div>
+</div>
+
+<div id="alart-warning-template" class="template">
+    <div class="alert alert-block">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        <h4>Warning!</h4>
+        <div id="alart-desc"></div>
+    </div>
+</div>
+<div id="alart-info-template" class="template">
+    <div class="alert alert-block alert-info">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        <div id="alart-desc"></div>
+    </div>
+</div>
+
+<div id="option-item-template" class="template">
+    <tr class='opt-item'>
+        <td id="opt"></td>
+        <td><input type="text" class="option-content" id="opt-content"></td>
+        <td><input type="checkbox" id="opt-right">是</td>
+    </tr>
+</div>
+
+<div id="question-detail-template" class="template">
+    <div class="form-horizontal" id="question" data-type="">
+        <div class="control-group">
+            <label class="control-label">题号</label>
+            <div class="controls">
+                <span class="span6 uneditable-input" id="q_number">分配中...</span>
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label">题目类型</label>
+            <div class="controls">
+                <span class="span6 uneditable-input" id="type"></span>
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label">题目来源</label>
+            <div class="controls">
+                <input class="span6" type="text" id="source">
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label">知识点</label>
+            <div class="controls">
+                <input class="span6" type="text" id="knowledge" placeholder="使用逗号分隔">
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label">难度</label>
+            <div class="controls">
+                <input class="span6" type="number" id="degree_of_difficulty">
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label">题干正文</label>
+            <div class="controls">
+                <textarea class="span6" rows="3" id="question-content"></textarea>
+            </div>
+        </div>
+        <div class="control-group" id="ctrl-option-group">
+            <label class="control-label">选项</label>
+            <div class="controls">
+                <table class="table table-condensed" style="width:75%">
+                    <thead>
+                        <td>#</td>
+                        <td>选项内容</td>
+                        <td>是否正确答案</td>
+                    </thead>
+                    <tbody id="option-list">
+                    </tbody>
+                </table>
+                <a class="btn btn-default" id="add-option-btn">添加选项</a>
+                <a class="btn btn-danger" id="remove-option-btn">删除选项</a>
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label">答案及解释</label>
+            <div class="controls">
+                <textarea class="span6" rows="5" id="explain"></textarea>
+            </div>
+        </div>
+        <div class="form-actions">
+            <a class="btn btn-success" id="save-btn">保存</a>
+        </div>
+    </div>
+</div>
+
+<div class="navbar">
+    <div class="navbar-inner">
+        <div class="container">
+            <a class="brand">布置题目</a>
+            <div class="btn-group pull-right">
+                <button class="btn" id="loadDataBtn">载入</button>
+                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                    新建...<span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu">
+                    <li><a href="#" id="gen_single_answer">单选题</a></li>
+                    <li><a href="#" id="gen_multi_answer">多选题</a></li>
+                    <li><a href="#" id="gen_true_false">判断题</a></li>
+                    <li><a href="#" id="gen_question_answer">问答题</a></li>
+                    <li><a href="#" id="gen_fill_in_the_blank">填空题</a></li>
+                </ul>
+            </div>
+            <div class="navbar-search-question pull-right">
+                <input type="number" class="search-query" id="question-number" placeholder="输入题号...">
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div id="alart-view"></div>
+<div id="question-detail"></div>
+
+</body>
+</html>

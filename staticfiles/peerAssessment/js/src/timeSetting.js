@@ -1,0 +1,146 @@
+/**
+ * Created by linkage on 2017/8/22.
+ */
+
+$(function($) {
+    var element = document;
+    makeAlart('info', '注意事项！设置各阶段时间，请按顺序保持时间递增');
+    $('#time-detail').html($('#time-detail-template').html());
+    initLoadData();
+
+    function initLoadData() {
+       
+        //向后台请求数据，获取己设置的时间。如果返回结果success:false说明没有设置过时间，如果返回结果，success:false，则把时间填上。
+       
+         parent.parent.xblockPost({
+         data: JSON.stringify({'requestType': 'timeSetting'}),
+         success: successLoading,
+         failure: handleFailure
+         }, 'getTimeJson');
+      /*
+        var data = {
+            "startTime": "2017-08-09T08:23:43.000Z",
+            "commitEndTime": "2017-08-09T08:23:46.000Z",
+            "judgeStartTime": "2017-08-09T08:23:48.000Z",
+            "judgeEndTime": "2017-08-09T08:23:50.000Z",
+            "auditStartTime": "2017-08-09T08:23:52.000Z",
+            "auditEndTime": "2017-08-09T08:23:54.000Z",
+            "publishTime": "2017-08-09T08:23:56.000Z"
+        };
+
+        $('#time-detail').html($('#time-detail-template').html());
+        fillTemplate($('#time-detail'), data);
+      */
+
+
+    }
+
+
+    function successLoading(timeSettingJson){
+     alert(JSON.stringify(timeSettingJson));
+     if(timeSettingJson.hasTimeSetting){
+         fillTemplate($('#time-detail'), timeSettingJson);
+       }
+    
+    }
+    function handleFailure(XMLHttpRequest, textStatus, errorThrown) {
+        makeAlart('error', 'Status: ' + XMLHttpRequest.status + ' ' + textStatus);
+    }
+    function fillTemplate(template, qJson) {
+        template.find('input#CommitStartTime').val(qJson.startTime);
+        template.find('input#CommitEndTime').val(qJson.commitEndTime);
+        template.find('input#PeerAssessmentStartTime').val(qJson.judgeStartTime);
+        template.find('input#PeerAssessmentEndTime').val(qJson.judgeEndTime);
+        template.find('input#AuditStartTime').val(qJson.auditStartTime);
+        template.find('input#AuditEndTime').val(qJson.auditEndTime);
+        template.find('input#PublishTime').val(qJson.publishTime);
+
+    }
+    
+    //弹出提示
+    function makeAlart(type, desc) {
+        $('#alart-view').empty();
+        $('#alart-view').html($('#alart-' + type + '-template').html());
+        var template = $('#alart-view')
+        template.find('#alart-desc').text(desc);
+    }
+
+    //获取时间设置的表单
+    function getTimeForm() {
+        //获取所有设置的时间
+        var timeSetting = {};
+        timeSetting.startTime = $('#time-detail').find('#CommitStartTime').val();
+        timeSetting.commitEndTime = $('#time-detail').find('#CommitEndTime').val();
+        timeSetting.judgeStartTime = $('#time-detail').find('#PeerAssessmentStartTime').val();
+        timeSetting.judgeEndTime = $('#time-detail').find('#PeerAssessmentEndTime').val();
+        timeSetting.auditStartTime = $('#time-detail').find('#AuditStartTime').val();
+        timeSetting.auditEndTime = $('#time-detail').find('#AuditEndTime').val();
+        timeSetting.publishTime = $('#time-detail').find('#PublishStartTime').val();
+        timeSetting.publishEndTime = $('#time-detail').find('#PublishEndTime').val();
+        return timeSetting;
+    }
+
+
+    //检查时间设置是否合理
+    function checkTimeForm(data) {
+        $('#alart-view').empty();
+
+        //检查是否有空的字段
+        var noError = true;
+        for (var key in data) {
+            if (data[key] == "") {
+                //$('#' + key).parent().addClass('has-error');
+                makeAlart('error', '时间都不能为空！');
+                noError = false;
+            }
+        }
+        //检查时间先后顺序
+        if (noError) {
+            if (!(data.startTime < data.commitEndTime && data.commitEndTime < data.judgeStartTime && data.judgeStartTime < data.judgeEndTime && data.judgeEndTime < data.auditStartTime && data.auditStartTime < data.auditEndTime && data.auditEndTime < data.publishTime && data.publishTime < data.publishEndTime)) {
+                makeAlart('error', '时间先后顺序有误！请重新设置');
+                noError = false;
+            }
+            //没有错误，保存
+            if (noError) {
+                startSaving(data);
+            }
+        }
+    }
+
+    //提交数据
+    function startSaving(data) {
+
+         $('#time-detail').find('#save-btn').text('保存中...');
+        //提交数据  提交到setTimeJson 这个python handler
+         parent.parent.xblockPost({
+         data: JSON.stringify(data),
+         success: finishSaving,
+         failure: handleFailure
+         }, 'setTimeJson');
+
+    }
+
+    function finishSaving(data) {
+          $('#time-detail').find('#save-btn').text('保存');
+       alert(JSON.stringify(data)); 
+        /*  if(data.success == true) {
+         makeAlart('success',  ' 保存成功！')
+         } else {
+         makeAlart('error', ' 设置失败！');
+         }*/
+    }
+
+    $('input.span4.time-setting',element).click(function(eventObject){
+       SelectDate(this,'yyyy-MM-dd hh:mm:ss');
+    });
+
+   //点击“保存”
+    $('#time-detail #save-btn', element).click(function (eventObject) {
+        var timeForm = getTimeForm();
+        //进行时间设置校验，后阶段时间不得早于前一阶段
+        checkTimeForm(timeForm);
+        // alert(JSON.stringify(timeForm));
+    });
+
+
+});
